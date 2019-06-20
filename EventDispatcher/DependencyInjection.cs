@@ -12,12 +12,13 @@ namespace EventDispatcher
     {
         /// <summary>
         /// Setup the event dispatcher<br/>
+        /// Concrete event types are registered by decorating them with the <see cref="EventTypeAttribute"/>
         /// Registers:<br/>
         /// <see cref="IEventDispatcher"/><br/>
         /// <see cref="IEventProcessor"/><br/>
         /// </summary>
         /// <param name="services"><see cref="IServiceCollection"/> service collection framework to register dependencies</param>
-        public static IServiceCollection UseEventDispatcher(this IServiceCollection services)
+        public static IServiceCollection AddEventDispatcher(this IServiceCollection services)
         {
             var eventTypeToConcreteMapping = GetConcreteEventModels(typeof(DependencyInjection).Assembly);
 

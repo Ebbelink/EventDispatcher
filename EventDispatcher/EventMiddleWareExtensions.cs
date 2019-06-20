@@ -10,7 +10,7 @@ namespace EventDispatcher
     {
         /// <summary>
         /// Start up an events endpoint to dispatch events to the registered callbacks via <see cref="IEventDispatcher.RegisterCallback{EventType}(Action{EventType})"/>.
-        /// In order to use this <see cref="DependencyInjection.UseEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/> has be used to register dependencies
+        /// In order to use this <see cref="DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/> has be used to register dependencies
         /// </summary>
         public static IApplicationBuilder UseEventsEndpoint(this IApplicationBuilder builder, string url = "/Events")
         {
