@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace EventDispatcher
@@ -20,6 +21,8 @@ namespace EventDispatcher
         /// <param name="services"><see cref="IServiceCollection"/> service collection framework to register dependencies</param>
         public static IServiceCollection AddEventDispatcher(this IServiceCollection services)
         {
+            Console.WriteLine("Adding the event dispatcher without looking for the EventType attribute");
+
             EventDispatcher dispatcher = new EventDispatcher();
 
             services.AddSingleton<IEventDispatcher>(dispatcher);
@@ -40,6 +43,8 @@ namespace EventDispatcher
         /// <param name="eventsAssemblies">The assemblies to look in for events decorated with the <see cref="EventTypeAttribute"/> that need to be registered</param>
         public static IServiceCollection AddEventDispatcher(this IServiceCollection services, params Assembly[] eventsAssemblies)
         {
+            Console.WriteLine($"Adding the event dispatcher. Looking in {string.Join(", ", eventsAssemblies.Select(e => e.FullName))}");
+
             EventDispatcher dispatcher = new EventDispatcher();
 
             foreach (var assembly in eventsAssemblies)
@@ -48,6 +53,8 @@ namespace EventDispatcher
 
                 foreach (var eventMap in eventTypeToConcreteMapping)
                 {
+                    Console.WriteLine($"Registering event: {eventMap.Key}, {eventMap.Value}");
+
                     dispatcher.RegisterEvent(eventMap.Key, eventMap.Value);
                 }
             }
