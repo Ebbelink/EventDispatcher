@@ -8,8 +8,8 @@ namespace EventDispatcher
 {
     internal class EventProcessor : IEventProcessor
     {
-        private const string _internalEventNameJPathIdentifier = "event";
-        private const string _eventTypeJPathIdentifier = "type";
+        private readonly string _eventTypeJPathIdentifier;
+        private readonly string _internalEventNameJPathIdentifier;
 
         private readonly EventDispatcher _dispatcher;
 
@@ -17,9 +17,13 @@ namespace EventDispatcher
         /// Constructor for the EventProcessor
         /// </summary>
         /// <param name="dispatcher"></param>
-        public EventProcessor(IEventDispatcher dispatcher)
+        /// <param name="eventTypeJPathIdentifier"></param>
+        /// <param name="internalEventNameJPathIdentifier"></param>
+        public EventProcessor(IEventDispatcher dispatcher, string eventTypeJPathIdentifier, string internalEventNameJPathIdentifier)
         {
             _dispatcher = dispatcher as EventDispatcher;
+            _eventTypeJPathIdentifier = eventTypeJPathIdentifier;
+            _internalEventNameJPathIdentifier = internalEventNameJPathIdentifier;
         }
 
         /// <summary>

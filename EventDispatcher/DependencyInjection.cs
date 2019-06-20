@@ -19,17 +19,11 @@ namespace EventDispatcher
         /// <see cref="IEventProcessor"/><br/>
         /// </summary>
         /// <param name="services"><see cref="IServiceCollection"/> service collection framework to register dependencies</param>
-        public static IServiceCollection AddEventDispatcher(this IServiceCollection services)
+        /// <param name="eventTypeJPathIdentifier">A JPath identiefier identifying where to find the event type for the events. Used for mapping to the concrete types</param>
+        /// <param name="internalEventNameJPathIdentifier">A JPath identiefier identifying where to find the internal event. Used as input for the concrete event</param>
+        public static IServiceCollection AddEventDispatcher(this IServiceCollection services, string eventTypeJPathIdentifier = "type", string internalEventNameJPathIdentifier = "event")
         {
-            Console.WriteLine("Adding the event dispatcher without looking for the EventType attribute");
-
-            EventDispatcher dispatcher = new EventDispatcher();
-
-            services.AddSingleton<IEventDispatcher>(dispatcher);
-
-            services.AddScoped<IEventProcessor, EventProcessor>();
-
-            return services;
+            return AddEventDispatcher(services, eventTypeJPathIdentifier, internalEventNameJPathIdentifier, null);
         }
 
         /// <summary>
@@ -41,27 +35,35 @@ namespace EventDispatcher
         /// </summary>
         /// <param name="services"><see cref="IServiceCollection"/> service collection framework to register dependencies</param>
         /// <param name="eventsAssemblies">The assemblies to look in for events decorated with the <see cref="EventTypeAttribute"/> that need to be registered</param>
-        public static IServiceCollection AddEventDispatcher(this IServiceCollection services, params Assembly[] eventsAssemblies)
+        /// <param name="eventTypeJPathIdentifier">A JPath identiefier identifying where to find the event type for the events. Used for mapping to the concrete types</param>
+        /// <param name="internalEventNameJPathIdentifier">A JPath identiefier identifying where to find the internal event. Used as input for the concrete event</param>
+        public static IServiceCollection AddEventDispatcher(this IServiceCollection services, string eventTypeJPathIdentifier = "type", string internalEventNameJPathIdentifier = "event", params Assembly[] eventsAssemblies)
         {
-            Console.WriteLine($"Adding the event dispatcher. Looking in {string.Join(", ", eventsAssemblies.Select(e => e.FullName))}");
+            if (services == null)
+                throw new ArgumentNullException(nameof(services));
+            if (string.IsNullOrEmpty(internalEventNameJPathIdentifier))
+                throw new ArgumentNullException(nameof(internalEventNameJPathIdentifier));
+            if (string.IsNullOrEmpty(eventTypeJPathIdentifier))
+                throw new ArgumentNullException(nameof(eventTypeJPathIdentifier));
 
             EventDispatcher dispatcher = new EventDispatcher();
 
-            foreach (var assembly in eventsAssemblies)
+            if (eventsAssemblies != null)
             {
-                var eventTypeToConcreteMapping = GetConcreteEventModels(assembly);
-
-                foreach (var eventMap in eventTypeToConcreteMapping)
+                foreach (var assembly in eventsAssemblies)
                 {
-                    Console.WriteLine($"Registering event: {eventMap.Key}, {eventMap.Value}");
+                    var eventTypeToConcreteMapping = GetConcreteEventModels(assembly);
 
-                    dispatcher.RegisterEvent(eventMap.Key, eventMap.Value);
+                    foreach (var eventMap in eventTypeToConcreteMapping)
+                    {
+                        dispatcher.RegisterEvent(eventMap.Key, eventMap.Value);
+                    }
                 }
             }
 
             services.AddSingleton<IEventDispatcher>(dispatcher);
 
-            services.AddScoped<IEventProcessor, EventProcessor>();
+            services.AddScoped<IEventProcessor>(s => new EventProcessor(dispatcher, eventTypeJPathIdentifier, internalEventNameJPathIdentifier));
 
             return services;
         }

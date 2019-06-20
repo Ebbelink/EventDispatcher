@@ -9,7 +9,7 @@
             Event dispatcher Dependency Injection Extension methods
             </summary>
         </member>
-        <member name="M:EventDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:EventDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.String)">
             <summary>
             Setup the event dispatcher<br/>
             Concrete event types are registered by decorating them with the <see cref="T:EventDispatcher.EventTypeAttribute"/>
@@ -18,8 +18,10 @@
             <see cref="T:EventDispatcher.IEventProcessor"/><br/>
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> service collection framework to register dependencies</param>
+            <param name="eventTypeJPathIdentifier">A JPath identiefier identifying where to find the event type for the events. Used for mapping to the concrete types</param>
+            <param name="internalEventNameJPathIdentifier">A JPath identiefier identifying where to find the internal event. Used as input for the concrete event</param>
         </member>
-        <member name="M:EventDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])">
+        <member name="M:EventDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.String,System.Reflection.Assembly[])">
             <summary>
             Setup the event dispatcher<br/>
             Concrete event types are registered by decorating them with the <see cref="T:EventDispatcher.EventTypeAttribute"/>
@@ -29,6 +31,8 @@
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> service collection framework to register dependencies</param>
             <param name="eventsAssemblies">The assemblies to look in for events decorated with the <see cref="T:EventDispatcher.EventTypeAttribute"/> that need to be registered</param>
+            <param name="eventTypeJPathIdentifier">A JPath identiefier identifying where to find the event type for the events. Used for mapping to the concrete types</param>
+            <param name="internalEventNameJPathIdentifier">A JPath identiefier identifying where to find the internal event. Used as input for the concrete event</param>
         </member>
         <member name="T:EventDispatcher.EventMiddleware">
             <summary>
@@ -59,14 +63,16 @@
         <member name="M:EventDispatcher.EventMiddleWareExtensions.UseEventsEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.String)">
             <summary>
             Start up an events endpoint to dispatch events to the registered callbacks via <see cref="M:EventDispatcher.IEventDispatcher.RegisterCallback``1(System.Action{``0})"/>.
-            In order to use this <see cref="M:EventDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/> has be used to register dependencies
+            In order to use this <see cref="!:DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/> has be used to register dependencies
             </summary>
         </member>
-        <member name="M:EventDispatcher.EventProcessor.#ctor(EventDispatcher.IEventDispatcher)">
+        <member name="M:EventDispatcher.EventProcessor.#ctor(EventDispatcher.IEventDispatcher,System.String,System.String)">
             <summary>
             Constructor for the EventProcessor
             </summary>
             <param name="dispatcher"></param>
+            <param name="eventTypeJPathIdentifier"></param>
+            <param name="internalEventNameJPathIdentifier"></param>
         </member>
         <member name="M:EventDispatcher.EventProcessor.ProcessEvent(Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
