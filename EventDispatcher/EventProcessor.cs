@@ -41,12 +41,12 @@ namespace EventDispatcher
             Console.WriteLine("parse the read body contents");
             var parsed = JObject.Parse(bodyContents);
 
+            Console.WriteLine("get the event type node from the json");
             var eventType = parsed.SelectToken(_eventTypeJPathIdentifier);
+            Console.WriteLine($"found event type: {eventType}");
 
-            Console.WriteLine($"found event type: {eventType.Values<string>()}");
-
+            Console.WriteLine($"Retrieving the registered event type from the event dispatcher");
             Type type = _dispatcher.GetEventType(eventType.Value<string>());
-
             Console.WriteLine($"Retrieved event type is: {type.ToString()}");
 
             Console.WriteLine("parsing internal event");
