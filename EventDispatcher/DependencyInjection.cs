@@ -20,15 +20,38 @@ namespace EventDispatcher
         /// <param name="services"><see cref="IServiceCollection"/> service collection framework to register dependencies</param>
         public static IServiceCollection AddEventDispatcher(this IServiceCollection services)
         {
-            var eventTypeToConcreteMapping = GetConcreteEventModels(typeof(DependencyInjection).Assembly);
-
             EventDispatcher dispatcher = new EventDispatcher();
 
-            foreach (var eventMap in eventTypeToConcreteMapping)
+            services.AddSingleton<IEventDispatcher>(dispatcher);
+
+            services.AddScoped<IEventProcessor, EventProcessor>();
+
+            return services;
+        }
+
+        /// <summary>
+        /// Setup the event dispatcher<br/>
+        /// Concrete event types are registered by decorating them with the <see cref="EventTypeAttribute"/>
+        /// Registers:<br/>
+        /// <see cref="IEventDispatcher"/><br/>
+        /// <see cref="IEventProcessor"/><br/>
+        /// </summary>
+        /// <param name="services"><see cref="IServiceCollection"/> service collection framework to register dependencies</param>
+        /// <param name="eventsAssemblies">The assemblies to look in for events decorated with the <see cref="EventTypeAttribute"/> that need to be registered</param>
+        public static IServiceCollection AddEventDispatcher(this IServiceCollection services, params Assembly[] eventsAssemblies)
+        {
+            EventDispatcher dispatcher = new EventDispatcher();
+
+            foreach (var assembly in eventsAssemblies)
             {
-                dispatcher.RegisterEvent(eventMap.Key, eventMap.Value);
+                var eventTypeToConcreteMapping = GetConcreteEventModels(typeof(DependencyInjection).Assembly);
+
+                foreach (var eventMap in eventTypeToConcreteMapping)
+                {
+                    dispatcher.RegisterEvent(eventMap.Key, eventMap.Value);
+                }
             }
-            
+
             services.AddSingleton<IEventDispatcher>(dispatcher);
 
             services.AddScoped<IEventProcessor, EventProcessor>();

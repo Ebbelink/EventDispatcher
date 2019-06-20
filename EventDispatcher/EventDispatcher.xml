@@ -9,14 +9,26 @@
             Event dispatcher Dependency Injection Extension methods
             </summary>
         </member>
-        <member name="M:EventDispatcher.DependencyInjection.UseEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:EventDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Setup the event dispatcher<br/>
+            Concrete event types are registered by decorating them with the <see cref="T:EventDispatcher.EventTypeAttribute"/>
             Registers:<br/>
             <see cref="T:EventDispatcher.IEventDispatcher"/><br/>
             <see cref="T:EventDispatcher.IEventProcessor"/><br/>
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> service collection framework to register dependencies</param>
+        </member>
+        <member name="M:EventDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])">
+            <summary>
+            Setup the event dispatcher<br/>
+            Concrete event types are registered by decorating them with the <see cref="T:EventDispatcher.EventTypeAttribute"/>
+            Registers:<br/>
+            <see cref="T:EventDispatcher.IEventDispatcher"/><br/>
+            <see cref="T:EventDispatcher.IEventProcessor"/><br/>
+            </summary>
+            <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> service collection framework to register dependencies</param>
+            <param name="eventsAssemblies">The assemblies to look in for events decorated with the <see cref="T:EventDispatcher.EventTypeAttribute"/> that need to be registered</param>
         </member>
         <member name="T:EventDispatcher.EventMiddleware">
             <summary>
@@ -47,7 +59,7 @@
         <member name="M:EventDispatcher.EventMiddleWareExtensions.UseEventsEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.String)">
             <summary>
             Start up an events endpoint to dispatch events to the registered callbacks via <see cref="M:EventDispatcher.IEventDispatcher.RegisterCallback``1(System.Action{``0})"/>.
-            In order to use this <see cref="M:EventDispatcher.DependencyInjection.UseEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/> has be used to register dependencies
+            In order to use this <see cref="M:EventDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/> has be used to register dependencies
             </summary>
         </member>
         <member name="M:EventDispatcher.EventProcessor.#ctor(EventDispatcher.IEventDispatcher)">
