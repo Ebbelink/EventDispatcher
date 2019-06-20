@@ -29,6 +29,7 @@ namespace EventDispatcher
         /// <param name="context"></param>
         public void ProcessEvent(HttpContext context)
         {
+            Console.WriteLine("start reading request body stream");
             StreamReader sr = new StreamReader(context.Request.Body);
 
             context.Request.Body.Position = 0;
@@ -37,16 +38,24 @@ namespace EventDispatcher
 
             sr.Dispose();
 
+            Console.WriteLine("parse the read body contents");
             var parsed = JObject.Parse(bodyContents);
 
             var eventType = parsed.SelectToken(_eventTypeJPathIdentifier);
 
+            Console.WriteLine($"found event type: {eventType.Values<string>()}");
+
             Type type = _dispatcher.GetEventType(eventType.Value<string>());
 
+            Console.WriteLine($"Retrieved event type is: {type.ToString()}");
+
+            Console.WriteLine("parsing internal event");
             var internalEvent = parsed.SelectToken(_internalEventNameJPathIdentifier);
 
+            Console.WriteLine("getting json of internal event");
             var parsedInternalEvent = internalEvent.ToObject(type);
 
+            Console.WriteLine("Raising callbacks for event");
             _dispatcher.RaiseEvent(parsedInternalEvent);
 
         }
