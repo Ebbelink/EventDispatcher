@@ -49,7 +49,7 @@ namespace EventDispatcher
 
             foreach (var assembly in eventsAssemblies)
             {
-                var eventTypeToConcreteMapping = GetConcreteEventModels(typeof(DependencyInjection).Assembly);
+                var eventTypeToConcreteMapping = GetConcreteEventModels(assembly);
 
                 foreach (var eventMap in eventTypeToConcreteMapping)
                 {
