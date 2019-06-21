@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace EventDispatcher
+namespace EventEndpointDispatcher
 {
     internal class EventCallback<EventType> : IEventCallback
         where EventType : class

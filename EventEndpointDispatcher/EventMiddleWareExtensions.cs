@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using System;
 
-namespace EventDispatcher
+namespace EventEndpointDispatcher
 {
     /// <summary>
     /// Extension methods for the <see cref="EventMiddleware"/> pipeline to run

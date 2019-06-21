@@ -1,53 +1,53 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>EventDispatcher</name>
+        <name>EventEndpointDispatcher</name>
     </assembly>
     <members>
-        <member name="T:EventDispatcher.DependencyInjection">
+        <member name="T:EventEndpointDispatcher.DependencyInjection">
             <summary>
             Event dispatcher Dependency Injection Extension methods
             </summary>
         </member>
-        <member name="M:EventDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.String)">
+        <member name="M:EventEndpointDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.String)">
             <summary>
             Setup the event dispatcher<br/>
-            Concrete event types are registered by decorating them with the <see cref="T:EventDispatcher.EventTypeAttribute"/>
+            Concrete event types are registered by decorating them with the <see cref="T:EventEndpointDispatcher.EventTypeAttribute"/>
             Registers:<br/>
-            <see cref="T:EventDispatcher.IEventDispatcher"/><br/>
-            <see cref="T:EventDispatcher.IEventProcessor"/><br/>
+            <see cref="T:EventEndpointDispatcher.IEventDispatcher"/><br/>
+            <see cref="T:EventEndpointDispatcher.IEventProcessor"/><br/>
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> service collection framework to register dependencies</param>
             <param name="eventTypeJPathIdentifier">A JPath identiefier identifying where to find the event type for the events. Used for mapping to the concrete types</param>
             <param name="internalEventNameJPathIdentifier">A JPath identiefier identifying where to find the internal event. Used as input for the concrete event</param>
         </member>
-        <member name="M:EventDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.String,System.Reflection.Assembly[])">
+        <member name="M:EventEndpointDispatcher.DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.String,System.Reflection.Assembly[])">
             <summary>
             Setup the event dispatcher<br/>
-            Concrete event types are registered by decorating them with the <see cref="T:EventDispatcher.EventTypeAttribute"/>
+            Concrete event types are registered by decorating them with the <see cref="T:EventEndpointDispatcher.EventTypeAttribute"/>
             Registers:<br/>
-            <see cref="T:EventDispatcher.IEventDispatcher"/><br/>
-            <see cref="T:EventDispatcher.IEventProcessor"/><br/>
+            <see cref="T:EventEndpointDispatcher.IEventDispatcher"/><br/>
+            <see cref="T:EventEndpointDispatcher.IEventProcessor"/><br/>
             </summary>
             <param name="services"><see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> service collection framework to register dependencies</param>
-            <param name="eventsAssemblies">The assemblies to look in for events decorated with the <see cref="T:EventDispatcher.EventTypeAttribute"/> that need to be registered</param>
+            <param name="eventsAssemblies">The assemblies to look in for events decorated with the <see cref="T:EventEndpointDispatcher.EventTypeAttribute"/> that need to be registered</param>
             <param name="eventTypeJPathIdentifier">A JPath identiefier identifying where to find the event type for the events. Used for mapping to the concrete types</param>
             <param name="internalEventNameJPathIdentifier">A JPath identiefier identifying where to find the internal event. Used as input for the concrete event</param>
         </member>
-        <member name="T:EventDispatcher.EventMiddleware">
+        <member name="T:EventEndpointDispatcher.EventMiddleware">
             <summary>
             Event processing middleware
             This is being used to dynamically set the path of the event 'endpoint'
             </summary>
         </member>
-        <member name="M:EventDispatcher.EventMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+        <member name="M:EventEndpointDispatcher.EventMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
             <summary>
-            Constructor for the <see cref="T:EventDispatcher.EventMiddleware"/>
+            Constructor for the <see cref="T:EventEndpointDispatcher.EventMiddleware"/>
             Used for dependency injection
             </summary>
             <param name="next">the delegate to execute next</param>
         </member>
-        <member name="M:EventDispatcher.EventMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext,EventDispatcher.IEventProcessor)">
+        <member name="M:EventEndpointDispatcher.EventMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext,EventEndpointDispatcher.IEventProcessor)">
             <summary>
             default Middleware implementation
             </summary>
@@ -55,18 +55,18 @@
             <param name="eventProcessor">the event processor used to process generic events</param>
             <returns></returns>
         </member>
-        <member name="T:EventDispatcher.EventMiddleWareExtensions">
+        <member name="T:EventEndpointDispatcher.EventMiddleWareExtensions">
             <summary>
-            Extension methods for the <see cref="T:EventDispatcher.EventMiddleware"/> pipeline to run
+            Extension methods for the <see cref="T:EventEndpointDispatcher.EventMiddleware"/> pipeline to run
             </summary>
         </member>
-        <member name="M:EventDispatcher.EventMiddleWareExtensions.UseEventsEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.String)">
+        <member name="M:EventEndpointDispatcher.EventMiddleWareExtensions.UseEventsEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.String)">
             <summary>
-            Start up an events endpoint to dispatch events to the registered callbacks via <see cref="M:EventDispatcher.IEventDispatcher.RegisterCallback``1(System.Action{``0})"/>.
+            Start up an events endpoint to dispatch events to the registered callbacks via <see cref="M:EventEndpointDispatcher.IEventDispatcher.RegisterCallback``1(System.Action{``0})"/>.
             In order to use this <see cref="!:DependencyInjection.AddEventDispatcher(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/> has be used to register dependencies
             </summary>
         </member>
-        <member name="M:EventDispatcher.EventProcessor.#ctor(EventDispatcher.IEventDispatcher,System.String,System.String)">
+        <member name="M:EventEndpointDispatcher.EventProcessor.#ctor(EventEndpointDispatcher.IEventDispatcher,System.String,System.String)">
             <summary>
             Constructor for the EventProcessor
             </summary>
@@ -74,14 +74,14 @@
             <param name="eventTypeJPathIdentifier"></param>
             <param name="internalEventNameJPathIdentifier"></param>
         </member>
-        <member name="M:EventDispatcher.EventProcessor.ProcessEvent(Microsoft.AspNetCore.Http.HttpContext)">
+        <member name="M:EventEndpointDispatcher.EventProcessor.ProcessEvent(Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
             Read the body from the <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> and extract the internal event from it.
             Parse that internal event to a concrete type and raise the callbacks for the event
             </summary>
             <param name="context"></param>
         </member>
-        <member name="T:EventDispatcher.IEventDispatcher">
+        <member name="T:EventEndpointDispatcher.IEventDispatcher">
             <summary>
             The Event dispatcher. The event dispatcher is here to:
             <br />
@@ -90,14 +90,14 @@
             Register a callback for a specific event to a event handler
             </summary>
         </member>
-        <member name="M:EventDispatcher.IEventDispatcher.RegisterEvent(System.String,System.Type)">
+        <member name="M:EventEndpointDispatcher.IEventDispatcher.RegisterEvent(System.String,System.Type)">
             <summary>
             Register an event name to a concrete class 
             </summary>
             <param name="eventName">the string event name</param>
             <param name="concreteType">The concrete class for the inner event</param>
         </member>
-        <member name="M:EventDispatcher.IEventDispatcher.RegisterCallback``1(System.Action{``0})">
+        <member name="M:EventEndpointDispatcher.IEventDispatcher.RegisterCallback``1(System.Action{``0})">
             <summary>
             dispatcher.RegisterCallback&lt;Models.SomethingChanged&gt;((somethingChangedEvent) => { DO SOMETHING HERE WITH THE EVENT });
             All generic types are constrained to class
@@ -105,12 +105,12 @@
             <typeparam name="EventType"></typeparam>
             <param name="callback"></param>
         </member>
-        <member name="T:EventDispatcher.IEventProcessor">
+        <member name="T:EventEndpointDispatcher.IEventProcessor">
             <summary>
             Processor for events
             </summary>
         </member>
-        <member name="M:EventDispatcher.IEventProcessor.ProcessEvent(Microsoft.AspNetCore.Http.HttpContext)">
+        <member name="M:EventEndpointDispatcher.IEventProcessor.ProcessEvent(Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
             Read the body from the <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> and extract the internal event from it.
             Parse that internal event to a concrete type and raise the callbacks for the event

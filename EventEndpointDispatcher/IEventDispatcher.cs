@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EventDispatcher
+namespace EventEndpointDispatcher
 {
     /// <summary>
     /// The Event dispatcher. The event dispatcher is here to:

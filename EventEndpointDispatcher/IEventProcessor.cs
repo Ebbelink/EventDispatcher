@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace EventDispatcher
+namespace EventEndpointDispatcher
 {
     /// <summary>
     /// Processor for events

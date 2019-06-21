@@ -1,4 +1,4 @@
-﻿namespace EventDispatcher
+﻿namespace EventEndpointDispatcher
 {
     internal interface IEventCallback
     {
