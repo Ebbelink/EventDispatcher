@@ -2,8 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.1.9</Version>
+    <Version>0.2.0</Version>
     <Authors>Madailei</Authors>
+    <PackageProjectUrl>https://github.com/madailei/EventDispatcher</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/madailei/EventDispatcher/blob/master/LICENSE.TXT</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Copyright>Madailei</Copyright>
+    <RepositoryUrl>https://github.com/madailei/EventDispatcher</RepositoryUrl>
+    <Description>Lightweight, easy to use, generic event endpoint and dispatcher</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
