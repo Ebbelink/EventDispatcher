@@ -1,1 +1,1 @@
-.NET standard Slack Api abstraction and helper for creation of messages
+Lightweight, easy to use, generic event endpoint and dispatcher
