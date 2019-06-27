@@ -28,16 +28,7 @@ If you don't want to manually register every event data class you can use the ov
 `services.AddTransient<EventsHandler>();`
 This event handler will be retrieved later in the startup to register callbacks on
 
-The handler will need to look like this:
-```
-public class EventsHandler
-{
-    public void SomeEventsHandler(Event someEvent)
-    {
-        // Do something with someEvent here...
-    }
-}
-```
+More on how the handler needs to look like in [Create the handler](#Create the handler)
 
 #### Use the event endpoint
 The steps are:
@@ -58,3 +49,18 @@ IEventDispatcher dispatcher = app.ApplicationServices.GetService<IEventDispatche
 // The callback is found in the EventHandler class as seen above.
 dispatcher.RegisterCallback<CarDelivered>(eventHandler.SomeEventsHandler);
 ```
+
+### Create the handler
+
+The handler will need to look like this:
+```
+public class EventsHandler
+{
+    public void SomeEventsHandler(Event someEvent)
+    {
+        // Do something with someEvent here...
+    }
+}
+```
+
+the only thing that matter here is that the function needs to be accessible from the startup. You can fix this by doing a GetService on the ApplicationServices if you need dependency injection in the event handler
