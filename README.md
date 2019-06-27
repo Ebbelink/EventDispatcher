@@ -40,16 +40,21 @@ public class EventsHandler
 ```
 
 #### Use the event endpoint
+The steps are:
+1. spin up the endpoint
+2. retrieve the instance of the EventsHandler in order to register the callbacks
+3. retrieve the IEventDispatcher in order to register the callbacks
+4. call dispatcher.RegisterCallback with a Type parameter for the EventType (Event in this case) to register a callback for. The callback is found in the EventHandler class as seen above.
 ```
-// spin up the endpoint
+// 1. spin up the endpoint
 app.UseEventsEndpoint("/events");
 
-// retrieve the instance of the EventsHandler in order to register the callbacks
+// 2. retrieve the instance of the EventsHandler in order to register the callbacks
 EventsHandler eventHandler = app.ApplicationServices.GetService<EventsHandler>(); 
 
-//retrieve the IEventDispatcher in order to register the callbacks
+// 3. retrieve the IEventDispatcher in order to register the callbacks
 IEventDispatcher dispatcher = app.ApplicationServices.GetService<IEventDispatcher>();
-// call dispatcher.RegisterCallback with a Type parameter for the EventType (Event in this case) to register a callback for.
+// 4. call dispatcher.RegisterCallback with a Type parameter for the EventType (Event in this case) to register a callback for.
 // The callback is found in the EventHandler class as seen above.
 dispatcher.RegisterCallback<CarDelivered>(eventHandler.SomeEventsHandler);
 ```
