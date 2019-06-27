@@ -28,7 +28,7 @@ If you don't want to manually register every event data class you can use the ov
 `services.AddTransient<EventsHandler>();`
 This event handler will be retrieved later in the startup to register callbacks on
 
-More on how the handler needs to look like in [Create the handler](#Create the handler)
+More on how the handler needs to look like in [Create the handler](#Create-the-handler)
 
 #### Use the event endpoint
 The steps are:
