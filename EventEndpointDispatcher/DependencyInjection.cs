@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace EventDispatcher
+namespace EventEndpointDispatcher
 {
     /// <summary>
     /// Event dispatcher Dependency Injection Extension methods

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http.Internal;
 using System;
 using System.Threading.Tasks;
 
-namespace EventDispatcher
+namespace EventEndpointDispatcher
 {
     /// <summary>
     /// Event processing middleware

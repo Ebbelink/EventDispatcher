@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
 
-namespace EventDispatcher
+namespace EventEndpointDispatcher
 {
     internal class EventProcessor : IEventProcessor
     {
